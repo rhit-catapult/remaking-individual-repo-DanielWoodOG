@@ -71,7 +71,7 @@ class Hero:
     
 
 class Cloud:
-    def __init__(self, screen, x, y, image_filename):
+    def __init__(self, screen: pygame.Surface, x, y, image_filename):
         """ Creates a Cloud sprite that will produce Raindrop objects.  The cloud will be moving around. """
         # TODO 24: Initialize this Cloud, as follows:
         #     - Store the screen.
@@ -80,12 +80,15 @@ class Cloud:
         #     - Create a list for Raindrop objects as an empty list called raindrops.
         #   Use instance variables:
         #      screen  x  y  image   raindrops.
-        pass
-
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.image = pygame.image.load(image_filename)
+        self.raindrops = []
     def draw(self):
         """ Draws this sprite onto the screen. """
         # TODO 25: Draw (blit) this Cloud's image at its current position.
-        pass
+        self.screen.blit(self.image, (self.x, self.y))
 
     def rain(self):
         """ Adds a Raindrop to the array of raindrops so that it looks like the Cloud is raining. """
@@ -118,7 +121,7 @@ def main():
         mike = Hero(screen, 200, 400, "Mike_umbrella.png", "Mike.png")
         alyssa = Hero(screen, 700, 400, "Alyssa_umbrella.png", "Alyssa.png")
     # TODO 23: Make a Cloud, named cloud, with appropriate images, starting at position x=300 y=50.
-
+        cloud = Cloud(screen, 300, 50, "cloud.png")
     # TODO 3: Enter the game loop, with a clock tick of 60 (or so) at each iteration.
         # TODO 4:   Make the pygame.QUIT event stop the game.
 
@@ -134,26 +137,9 @@ def main():
         # TODO 5: Inside the game loop, draw the screen (fill with white)
         
         # --- begin area of test_drop code that will be removed later
-        # TODO 12: As a temporary test, move test_drop
-        # TODO 14: As a temporary test, check if test_drop is off screen, if so reset the y position to 10
-        # TODO 10: As a temporary test, draw test_drop
-        test_drop.draw()
-        test_drop.move()
-        if test_drop.off_screen():
-            test_drop.y=10
-        test_drop.draw()
-        # TODO 20: As a temporary test, check if test_drop is hitting Mike (or Alyssa), if so set their last_hit_time
-        if mike.hit_by(test_drop):
-            mike.last_hit_time =time.time()
-        if alyssa.hit_by(test_drop):
-            alyssa.last_hit_time =time.time()
-        # TODO 22: Remove the code that reset the y of the test_drop when off_screen()
-        #          Instead reset the test_drop y to 10 when mike is hit, additionally set the x to 750
-        #          Then add similar code to alyssa that sets her last_hit_time and moves the test_drop to 10 320
-        # --- end area of test_drop code that will be removed later
-
+       
         # TODO 26: Draw the Cloud.
-
+        cloud.draw()
         # TODO 29: Remove the temporary testdrop code from this function and refactor it as follows:
         # TODO: Make the Cloud "rain", then:
         # TODO    For each Raindrop in the Cloud's list of raindrops:
