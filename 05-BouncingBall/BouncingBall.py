@@ -19,11 +19,14 @@ class Ball:
     def move(self):
         self.x += self.speed_x
         self.y += self.speed_y
-        # fix the loops here to make it bounce
-        if self.x >= 800 
-            self.speed_x * -1
-        if self.y >= 800
-            self.speed_y * -1
+        if self.x >= 800 - self.radius:
+            self.speed_x *= -1
+        if self.x <= 0 + self.radius:
+            self.speed_x *= -1
+        if self.y >= 800 - self.radius:
+            self.speed_y *= -1
+        if self.y <= 0 + self.radius:
+            self.speed_y *= -1
     def draw(self):
         pygame.draw.circle(self.screen, (random.randint(0,255),random.randint(0,225),random.randint(0,225)),(self.x,self.y),self.radius)
 def main():
@@ -34,7 +37,10 @@ def main():
     clock = pygame.time.Clock()
 
     # TODO: Create an instance of the Ball class called ball1
-    ball1 = Ball(screen, (random.randint(0,800)),(random.randint(0,800)))
+    balls = []
+    for k in range(100):
+        ball = Ball(screen, (random.randint(0,800)),(random.randint(0,800)))
+        balls.append(ball)
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -42,12 +48,12 @@ def main():
 
         clock.tick(60)
         screen.fill(pygame.Color('gray'))
-        ball1.draw()
-        ball1.move()
-
+        for ball in balls:
+            ball.draw()
+            ball.move()
         # TODO: Move the ball
         # TODO: Draw the ball
-
+        
         pygame.display.update()
 
 
